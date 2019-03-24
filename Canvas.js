@@ -6,7 +6,7 @@ class Canvas {
         this.canvas = new Array(height);
         for(let i = 0; i < this.canvas.length; i++) {
             const array = new Array(width);
-            this.canvas[i] = array.fill('x');
+            this.canvas[i] = array.fill(' ');
         }
     }
 
@@ -18,7 +18,7 @@ class Canvas {
         return this._height;
     }
 
-    getContent(x, y) {
+    getCellContent(x, y) {
         return this.canvas[x][y];
     }
 }

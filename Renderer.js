@@ -9,7 +9,7 @@ class Renderer {
         for(let x = 0; x < this.canvas.getHeight(); x++) {
             process.stdout.write('|');
             for(let y = 0; y < this.canvas.getWidth(); y++) {
-                process.stdout.write(this.canvas.getContent(x, y));
+                process.stdout.write(this.canvas.getCellContent(x, y));
             }
             process.stdout.write('|\n')
         }
