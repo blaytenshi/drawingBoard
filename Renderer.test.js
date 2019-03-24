@@ -1,4 +1,5 @@
-const Renderer = requrie('./Renderer');
+const Canvas = require('./Canvas');
+const Renderer = require('./Renderer');
 
 describe('The Renderer', () => {
     let renderer = null;
@@ -9,4 +10,7 @@ describe('The Renderer', () => {
         renderer = new Renderer(canvas);
     });
 
+    test('should blah', () => {
+        expect(true).toBe(true);
+    })
 });
