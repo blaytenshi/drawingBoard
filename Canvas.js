@@ -21,6 +21,10 @@ class Canvas {
     getCellContent(x, y) {
         return this.canvas[x][y];
     }
+
+    setCellContent(x, y, fillValue) {
+        this.canvas[x][y] = fillValue
+    }
 }
 
 module.exports = Canvas;

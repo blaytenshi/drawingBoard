@@ -22,7 +22,12 @@ describe('The canvas', () => {
 
     test('should return content of a cell with given coordinates', () => {
         expect(canvas.getCellContent(1, 1)).toBe(' ');
-    })
+    });
+
+    test('should set conent of a cell with given coordinates', () => {
+        canvas.setCellContent(1, 1, 'x');
+        expect(canvas.getCellContent(1, 1)).toBe('x');
+    });
 
 });
 
