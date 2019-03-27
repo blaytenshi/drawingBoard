@@ -11,6 +11,10 @@ class Coordinate {
     getY() {
         return this._y;
     }
+
+    toString() {
+        return "{ x: " + this._x + ", y: " + this._y + " }"
+    }
 }
 
 module.exports = Coordinate;

@@ -10,20 +10,30 @@ class CanvasEditor {
             if (this.isHorizontal(coordinate1, coordinate2)) {
                 // Y1, Y2 is the same therefore repeat inserts for X
                 console.log('isHorizontal!');
-                for (let start = coordinate1.getX(); start <= this.canvas.getWidth() - 1; start++) {
-                    this.canvas.setCellContent(start, coordinate1.getY(), 'x');
-                    console.log('setValue!');
+                const startPoint = coordinate1.getX() < coordinate2.getX() ? coordinate1.getX() : coordinate2.getX();
+                const lineLength = Math.abs(coordinate1.getX() - coordinate2.getX());
+                for (let x = startPoint; x < startPoint + lineLength; x++) {
+                    console.log('coordinates', x, coordinate1.getY());
+                    this.canvas.setCellContent(x, coordinate1.getY(), 'x');
                 }
             } else if (this.isVertical(coordinate1, coordinate2)) {
                 // X1, X2 is the same therefore repeat inserts for Y
                 console.log('isVertical!');
+                const startPoint = coordinate1.getY() < coordinate2.getY() ? coordinate1.getY() : coordinate2.getY();
+                const lineHeight = Math.abs(coordinate1.getY() - coordinate2.getY());
+                for (let y = startPoint; y < startPoint + lineHeight; y++) {
+                    console.log('coordinates', y, coordinate1.getX());
+                    this.canvas.setCellContent(coordinate1.getX(), y, 'x');
+                }
             } else {
                 // Neither Xs and Yx of both coordinates match. They aren't horizontal nor vertical lines. Throw Error.
                 console.log('neither!');
+                throw new InvalidCoordinatesError(coordinate1, coordinate2);
             }
         } else {
             // Coordinate is out of canvas bounds. Throw an error
             console.log('outOfBounds!');
+            throw new CoordinatesOutOfBoundsError(coordinate1, coordinate2);
         }
     }
 
