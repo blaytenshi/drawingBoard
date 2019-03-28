@@ -1,3 +1,5 @@
+const InvalidInputError = require('./InvalidInputError');
+
 class InvalidCoordinatesError extends InvalidInputError {
     constructor(coordinate1, coordinate2) {
         super("Coordinates are neither horizontal or vertical.");
@@ -6,3 +8,5 @@ class InvalidCoordinatesError extends InvalidInputError {
         this.coordinate2 = coordinate2;
     }
 }
+
+module.exports = InvalidCoordinatesError;

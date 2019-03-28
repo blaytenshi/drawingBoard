@@ -48,10 +48,11 @@ describe('The CanvasEditor', () => {
     // });
 
     test('should throw error when given coordinates doesn\'t cannot create horizontal or vertical line', () => {
-        const drawLine = () => {
-            canvasEditor.drawLine(coordinate1, coordinate3);
-        };
-        expect(drawLine()).toThrow(new InvalidCoordinatesError(coordinate1, coordinate3));
+        // since we're testing that the drawLine function actually throws errors with inputs, we must wrap it
+        // inside an anonymous functiono when calling the functioon to test
+        expect(() => {
+            canvasEditor.drawLine(coordinate1, coordinate3)
+        }).toThrow(InvalidCoordinatesError);
 
     })
 });

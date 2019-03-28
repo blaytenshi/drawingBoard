@@ -1,3 +1,5 @@
+const InvalidInputError = require('./InvalidInputError');
+
 class CoordinatesOutOfBoundsError extends InvalidInputError {
     constructor(coordinate) {
         super("Coordinate is not within canvas");
@@ -5,3 +7,4 @@ class CoordinatesOutOfBoundsError extends InvalidInputError {
         this.coordinate = coordinate;
     }
 }
+module.exports = CoordinatesOutOfBoundsError;

@@ -4,3 +4,5 @@ class InvalidInputError extends Error {
         this.name = "InvalidInputError";
     }
 }
+
+module.exports = InvalidInputError;

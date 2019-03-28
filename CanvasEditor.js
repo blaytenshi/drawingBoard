@@ -1,4 +1,5 @@
-const InvalidInputError = require('./InvalidInputError');
+const CoordinatesOutOfBoundsError = require('./CoordinatesOutOfBoundsError');
+const InvalidCoordinatesError = require('./InvalidCoordinatesError');
 
 class CanvasEditor {
     constructor(canvas) {
@@ -27,7 +28,7 @@ class CanvasEditor {
                 }
             } else {
                 // Neither Xs and Yx of both coordinates match. They aren't horizontal nor vertical lines. Throw Error.
-                console.log('neither!');
+                // console.log('neither!');
                 throw new InvalidCoordinatesError(coordinate1, coordinate2);
             }
         } else {
