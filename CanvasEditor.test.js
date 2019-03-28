@@ -2,6 +2,8 @@ const CanvasEditor = require('./CanvasEditor');
 const Canvas = require('./Canvas');
 const Coordinate = require('./Coordinate');
 const Renderer = require('./Renderer');
+const InvalidCoordinatesError = require('./InvalidCoordinatesError');
+const InvalidInputError = require('./InvalidInputError');
 
 describe('The CanvasEditor', () => {
     let canvas;
@@ -36,8 +38,20 @@ describe('The CanvasEditor', () => {
         expect(canvasEditor.isHorizontal(coordinate1, coordinate3)).toBe(false);
     });
 
-    test('blah', () => {
-        canvasEditor.drawLine(coordinate2, coordinate3);
-        renderer.render();
+    // test('should draw horizontal lines onto the canvas', () => {
+    //     canvasEditor.drawLine(coordinate2, coordinate3);
+    //
+    // });
+    //
+    // test('should draw vertical lines onto the canvas', () => {
+    //     canvasEditor.drawLine(coordinate1, coordinate2);
+    // });
+
+    test('should throw error when given coordinates doesn\'t cannot create horizontal or vertical line', () => {
+        const drawLine = () => {
+            canvasEditor.drawLine(coordinate1, coordinate3);
+        };
+        expect(drawLine()).toThrow(new InvalidCoordinatesError(coordinate1, coordinate3));
+
     })
 });
