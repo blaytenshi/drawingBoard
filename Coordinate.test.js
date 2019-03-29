@@ -1,6 +1,7 @@
 const Coordinate = require('./Coordinate');
+const InvalidCoordinateError = require('./InvalidCoordinateError');
 
-describe('The coordinate', () => {
+describe('A valid coordinate', () => {
     let coordinate = null;
 
     beforeAll(() => {
@@ -19,4 +20,18 @@ describe('The coordinate', () => {
     test('should return the y value of the coordinate object', () => {
         expect(coordinate.getY()).toBe(10);
     });
+});
+
+describe('An invalid coordinate', () => {
+    it('should throw InvalidCoordinateError', () => {
+        expect(() => {
+            new Coordinate(-1, -1)
+        }).toThrow(InvalidCoordinateError);
+    })
+
+    it('should throw InvalidCoordinateError when passed non-numeric values', () => {
+        expect(() => {
+            new Coordinate("4", "5")
+        }).toThrow(InvalidCoordinateError);
+    })
 });

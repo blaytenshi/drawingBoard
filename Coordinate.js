@@ -1,5 +1,10 @@
+const InvalidCoordinateError = require('./InvalidCoordinateError');
+
 class Coordinate {
     constructor(x, y) {
+        if (x < 0 || y < 0 || (typeof x !== "number") || (typeof y !== "number")) {
+            throw new InvalidCoordinateError(x, y)
+        }
         this._x = x;
         this._y = y;
     }
@@ -10,10 +15,6 @@ class Coordinate {
 
     getY() {
         return this._y;
-    }
-
-    toString() {
-        return "{ x: " + this._x + ", y: " + this._y + " }"
     }
 }
 
