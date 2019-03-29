@@ -3,6 +3,7 @@ const Canvas = require('./Canvas');
 const Coordinate = require('./Coordinate');
 const Renderer = require('./Renderer');
 const InvalidLineError = require('./InvalidLineError');
+const CoordinatesSetOutOfBoundsError = require('./CoordinatesSetOutOfBoundsError');
 
 describe('The CanvasEditor', () => {
     let canvas;
@@ -20,6 +21,7 @@ describe('The CanvasEditor', () => {
         coordinate1 = new Coordinate(5, 5);
         coordinate2 = new Coordinate(5, 10);
         coordinate3 = new Coordinate(10, 10);
+        coordinate4 = new Coordinate(100, 100);
     });
 
     test('should return true when X values of two coordinates are the same', () => {
@@ -36,6 +38,12 @@ describe('The CanvasEditor', () => {
 
     test('should return false when Y values of two coordinates are not the same', () => {
         expect(canvasEditor.isHorizontal(coordinate1, coordinate3)).toBe(false);
+    });
+
+    test('should throw error when given coordinate set that is out of canvas bounds', () => {
+        expect(() => {
+            canvasEditor.drawLine(coordinate1, coordinate4);
+        }).toThrow(CoordinatesSetOutOfBoundsError);
     });
 
     test('should draw horizontal lines onto the canvas', () => {

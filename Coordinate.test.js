@@ -27,11 +27,11 @@ describe('An invalid coordinate', () => {
         expect(() => {
             new Coordinate(-1, -1)
         }).toThrow(InvalidCoordinateError);
-    })
+    });
 
     it('should throw InvalidCoordinateError when passed non-numeric values', () => {
         expect(() => {
             new Coordinate("4", "5")
         }).toThrow(InvalidCoordinateError);
-    })
+    });
 });
