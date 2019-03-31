@@ -48,8 +48,9 @@ describe('The CanvasEditor', () => {
 
     test('should draw horizontal lines onto the canvas', () => {
         canvasEditor.drawLine(coordinate2, coordinate3);
+        // Test start of line is filled
         expect(canvas.getCellContent(coordinate2.getX(), coordinate3.getY())).toBe('x');
-        // the -1 is needed for off-by-one
+        // Test end of line is filled, the -1 is needed for off-by-one
         expect(canvas.getCellContent(
             coordinate2.getX() + Math.abs(coordinate2.getX() - coordinate3.getX()) - 1,
             coordinate3.getY())
@@ -59,7 +60,6 @@ describe('The CanvasEditor', () => {
     test('should draw vertical lines onto the canvas', () => {
         canvasEditor.drawLine(coordinate1, coordinate2);
         expect(canvas.getCellContent(coordinate1.getY(), coordinate2.getY())).toBe('x');
-        // the -1 is needed for off-by-one
         expect(canvas.getCellContent(
             coordinate1.getX(),
             coordinate1.getY() + Math.abs(coordinate1.getY() - coordinate2.getY()) - 1)
