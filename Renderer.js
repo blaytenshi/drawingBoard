@@ -1,19 +1,20 @@
 class Renderer {
-    constructor(canvas) {
-        this.canvas = canvas;
+    constructor(output) {
+        this.output = output;
     }
 
-    render() {
-        process.stdout.write('-'.repeat(this.canvas.getWidth() + 2));
-        process.stdout.write('\n');
-        for(let y = 0; y < this.canvas.getHeight(); y++) {
-            process.stdout.write('|');
-            for(let x = 0; x < this.canvas.getWidth(); x++) {
-                process.stdout.write(this.canvas.getCellContent(x, y));
+    render(canvas) {
+        this.output.write('-'.repeat(canvas.getWidth() + 2));
+        this.output.write('\n');
+        for(let y = 0; y < canvas.getHeight(); y++) {
+            this.output.write('|');
+            for(let x = 0; x < canvas.getWidth(); x++) {
+                this.output.write(canvas.getCellContent(x, y));
             }
-            process.stdout.write('|\n')
+            this.output.write('|\n')
         }
-        process.stdout.write('-'.repeat(this.canvas.getWidth() + 2));
+        this.output.write('-'.repeat(canvas.getWidth() + 2));
+        this.output.write('\n');
     }
 }
 

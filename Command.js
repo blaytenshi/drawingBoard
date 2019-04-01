@@ -5,25 +5,25 @@ class Command {
         const operation = opString.toUpperCase().split(" ");
         if (operation[0] === "C" && operation.length === 3) {
             this._operation = operation[0];
-            this._coordinateX1 = operation[1];
-            this._coordinateY1 = operation[2];
+            this._coordinateX1 = parseInt(operation[1]);
+            this._coordinateY1 = parseInt(operation[2]);
         } else if (operation[0] === "L" && operation.length === 5) {
             this._operation = operation[0];
-            this._coordinateX1 = operation[1];
-            this._coordinateY1 = operation[2];
-            this._coordinateX2 = operation[3];
-            this._coordinateY2 = operation[4];
+            this._coordinateX1 = parseInt(operation[1]);
+            this._coordinateY1 = parseInt(operation[2]);
+            this._coordinateX2 = parseInt(operation[3]);
+            this._coordinateY2 = parseInt(operation[4]);
         } else if (operation[0] === "R" && operation.length === 5) {
             this._operation = operation[0];
-            this._coordinateX1 = operation[1];
-            this._coordinateY1 = operation[2];
-            this._coordinateX2 = operation[3];
-            this._coordinateY2 = operation[4];
+            this._coordinateX1 = parseInt(operation[1]);
+            this._coordinateY1 = parseInt(operation[2]);
+            this._coordinateX2 = parseInt(operation[3]);
+            this._coordinateY2 = parseInt(operation[4]);
         } else if (operation[0] === "B" && operation.length === 4) {
             this._operation = operation[0];
-            this._coordinateX1 = operation[1];
-            this._coordinateX2 = operation[2];
-            this._fillValue = operation[3];
+            this._coordinateX1 = parseInt(operation[1]);
+            this._coordinateX2 = parseInt(operation[2]);
+            this._fillValue = parseInt(operation[3]);
         } else if (operation[0] === "Q" && operation.length === 1) {
             this._operation = operation[0];
         } else {
