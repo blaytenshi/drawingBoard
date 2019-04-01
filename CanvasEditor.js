@@ -37,6 +37,10 @@ class CanvasEditor {
         this.drawLine(coordinate4, coordinate1);
     }
 
+    bucketFill(startCoordinate, fillValue) {
+
+    }
+
     isCoordinatesOutOfBounds(coordinate1, coordinate2) {
         return coordinate1.getX() > this.canvas.getWidth() ||
             coordinate2.getX() > this.canvas.getWidth() ||

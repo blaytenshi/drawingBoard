@@ -33,6 +33,7 @@ rl.on('line', line => {
                 renderer.render(canvas);
                 break;
             case Operation.DRAW_LINE:
+                console.log("Drawing Line");
                 canvasEditor = new CanvasEditor(canvas);
                 canvasEditor.drawLine(
                     new Coordinate(command.getX1(), command.getY1()),
@@ -41,6 +42,7 @@ rl.on('line', line => {
                 renderer.render(canvas);
                 break;
             case Operation.DRAW_RECT:
+                console.log("Drawing Rectangle");
                 canvasEditor = new CanvasEditor(canvas);
                 canvasEditor.drawRectangle(
                     new Coordinate(command.getX1(), command.getY1()),
@@ -52,6 +54,10 @@ rl.on('line', line => {
                 break;
             case Operation.BUCKET_FILL:
                 console.log("Drawing Bucket Fill");
+                canvasEditor.bucketFill(
+                    new Coordinate(command.getX1(), command.getY1()),
+                    command.getFillValue()
+                );
                 break;
             case Operation.QUIT:
                 rl.close();
