@@ -25,6 +25,19 @@ class Canvas {
     setCellContent(x, y, fillValue) {
         this.canvas[y][x] = fillValue
     }
+
+    render() {
+        process.stdout.write('-'.repeat(this._width + 2));
+        process.stdout.write('\n');
+        for(let y = 0; y < this._height; y++) {
+            process.stdout.write('|');
+            for(let x = 0; x < this._width; x++) {
+                process.stdout.write(this.getCellContent(x, y));
+            }
+            process.stdout.write('|\n')
+        }
+        process.stdout.write('-'.repeat(this._width + 2));
+    }
 }
 
 module.exports = Canvas;

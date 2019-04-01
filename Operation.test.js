@@ -1,4 +1,4 @@
-const Operation = require('./Operation');
+const Operation = require('./Command');
 
 describe('A draw canvas operation', () => {
     it('should return a draw canvas operation', () => {
