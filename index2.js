@@ -15,9 +15,8 @@ const rl = readline.createInterface({
     prompt: 'enter command: '
 });
 
-
 let canvas = null;
-const canvasEditor = new CanvasEditor(canvas);
+let canvasEditor = null;
 const renderer = new Renderer(output);
 
 rl.prompt();
@@ -34,15 +33,22 @@ rl.on('line', line => {
                 renderer.render(canvas);
                 break;
             case Operation.DRAW_LINE:
+                canvasEditor = new CanvasEditor(canvas);
                 canvasEditor.drawLine(
                     new Coordinate(command.getX1(), command.getY1()),
                     new Coordinate(command.getX2(), command.getY2()),
-                    canvas
                 );
                 renderer.render(canvas);
                 break;
             case Operation.DRAW_RECT:
-                console.log("Drawing Rectangle");
+                canvasEditor = new CanvasEditor(canvas);
+                canvasEditor.drawRectangle(
+                    new Coordinate(command.getX1(), command.getY1()),
+                    new Coordinate(command.getX1(), command.getY2()),
+                    new Coordinate(command.getX2(), command.getY2()),
+                    new Coordinate(command.getX2(), command.getY1())
+                );
+                renderer.render(canvas);
                 break;
             case Operation.BUCKET_FILL:
                 console.log("Drawing Bucket Fill");

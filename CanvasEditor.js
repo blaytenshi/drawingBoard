@@ -30,6 +30,13 @@ class CanvasEditor {
         }
     }
 
+    drawRectangle(coordinate1, coordinate2, coordinate3, coordinate4) {
+        this.drawLine(coordinate1, coordinate2);
+        this.drawLine(coordinate2, coordinate3);
+        this.drawLine(coordinate3, coordinate4);
+        this.drawLine(coordinate4, coordinate1);
+    }
+
     isCoordinatesOutOfBounds(coordinate1, coordinate2) {
         return coordinate1.getX() > this.canvas.getWidth() ||
             coordinate2.getX() > this.canvas.getWidth() ||
