@@ -6,11 +6,11 @@ describe('The Renderer', () => {
     let canvas = null;
 
     beforeAll(() => {
-        canvas = new Canvas(10, 12);
-        renderer = new Renderer(canvas);
+        canvas = new Canvas(5, 5);
+        renderer = new Renderer(process.stdout);
     });
 
     test('should blah', () => {
-        expect(true).toBe(true);
+        expect(renderer.render(canvas)).toHaveBeenCalled();
     })
 });

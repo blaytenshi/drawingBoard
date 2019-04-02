@@ -19,11 +19,11 @@ class Canvas {
     }
 
     getCellContent(x, y) {
-        return this.canvas[y][x];
+        return this.canvas[y - 1][x - 1];
     }
 
     setCellContent(x, y, fillValue) {
-        this.canvas[y][x] = fillValue
+        this.canvas[y - 1][x - 1] = fillValue
     }
 }
 

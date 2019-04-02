@@ -6,9 +6,9 @@ class Renderer {
     render(canvas) {
         this.output.write('-'.repeat(canvas.getWidth() + 2));
         this.output.write('\n');
-        for(let y = 0; y < canvas.getHeight(); y++) {
+        for(let y = 1; y <= canvas.getHeight(); y++) {
             this.output.write('|');
-            for(let x = 0; x < canvas.getWidth(); x++) {
+            for(let x = 1; x <= canvas.getWidth(); x++) {
                 this.output.write(canvas.getCellContent(x, y));
             }
             this.output.write('|\n')

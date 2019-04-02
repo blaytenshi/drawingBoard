@@ -16,6 +16,7 @@ class Coordinate {
     getY() {
         return this._y;
     }
+
 }
 
 module.exports = Coordinate;

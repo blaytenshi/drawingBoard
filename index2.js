@@ -22,11 +22,11 @@ const renderer = new Renderer(output);
 rl.prompt();
 
 rl.on('line', line => {
-    try {
 
+    try {
         const command = new Command(line);
 
-        switch(command.getOperation()) {
+        switch (command.getOperation()) {
             case Operation.CREATE_CANVAS:
                 console.log("Creating Canvas");
                 canvas = new Canvas(command.getX1(), command.getY1());
@@ -54,10 +54,13 @@ rl.on('line', line => {
                 break;
             case Operation.BUCKET_FILL:
                 console.log("Drawing Bucket Fill");
+                canvasEditor = new CanvasEditor(canvas);
                 canvasEditor.bucketFill(
-                    new Coordinate(command.getX1(), command.getY1()),
+                    command.getX1(),
+                    command.getY1(),
                     command.getFillValue()
                 );
+                renderer.render(canvas);
                 break;
             case Operation.QUIT:
                 rl.close();
