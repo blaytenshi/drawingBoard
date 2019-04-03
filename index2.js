@@ -22,7 +22,6 @@ const renderer = new Renderer(output);
 rl.prompt();
 
 rl.on('line', line => {
-
     try {
         const command = new Command(line);
 
@@ -67,7 +66,7 @@ rl.on('line', line => {
                 break;
         }
     } catch (e) {
-        console.log(e.message);
+        output.write(e.message);
     }
     rl.prompt();
 }).on('close', () => {
