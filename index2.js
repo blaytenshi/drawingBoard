@@ -16,45 +16,43 @@ const rl = readline.createInterface({
 });
 
 let canvas = null;
-let canvasEditor = null;
+let canvasEditor = new CanvasEditor();
 const renderer = new Renderer(output);
 
 rl.prompt();
 
 rl.on('line', line => {
-    try {
+    // try {
         const command = new Command(line);
 
         switch (command.getOperation()) {
             case Operation.CREATE_CANVAS:
                 console.log("Creating Canvas");
-                canvas = new Canvas(command.getX1(), command.getY1());
+                canvas = Canvas.create(command.getX1(), command.getY1());
                 renderer.render(canvas);
                 break;
             case Operation.DRAW_LINE:
                 console.log("Drawing Line");
-                canvasEditor = new CanvasEditor(canvas);
                 canvasEditor.drawLine(
-                    new Coordinate(command.getX1(), command.getY1()),
-                    new Coordinate(command.getX2(), command.getY2()),
+                    canvas,
+                    command.getX1(), command.getY1(),
+                    command.getX2(), command.getY2(),
                 );
                 renderer.render(canvas);
                 break;
             case Operation.DRAW_RECT:
                 console.log("Drawing Rectangle");
-                canvasEditor = new CanvasEditor(canvas);
                 canvasEditor.drawRectangle(
-                    new Coordinate(command.getX1(), command.getY1()),
-                    new Coordinate(command.getX1(), command.getY2()),
-                    new Coordinate(command.getX2(), command.getY2()),
-                    new Coordinate(command.getX2(), command.getY1())
+                    canvas,
+                    command.getX1(), command.getY1(),
+                    command.getX2(), command.getY2(),
                 );
                 renderer.render(canvas);
                 break;
             case Operation.BUCKET_FILL:
                 console.log("Drawing Bucket Fill");
-                canvasEditor = new CanvasEditor(canvas);
                 canvasEditor.bucketFill(
+                    canvas,
                     command.getX1(),
                     command.getY1(),
                     command.getFillValue()
@@ -65,9 +63,9 @@ rl.on('line', line => {
                 rl.close();
                 break;
         }
-    } catch (e) {
-        output.write(e.message);
-    }
+    // } catch (e) {
+    //     output.write(e.message);
+    // }
     rl.prompt();
 }).on('close', () => {
     process.exit();

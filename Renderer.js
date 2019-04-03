@@ -14,7 +14,7 @@ class Renderer {
             this.output.write('|\n')
         }
         this.output.write('-'.repeat(canvas.getWidth() + 2));
-        this.output.write('\n');
+        this.output.write('\n\n');
     }
 }
 

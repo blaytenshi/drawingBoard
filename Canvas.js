@@ -10,6 +10,10 @@ class Canvas {
         }
     }
 
+    static create(width, height) {
+        return new Canvas(width, height);
+    }
+
     getWidth() {
         return this._width;
     }
@@ -18,12 +22,12 @@ class Canvas {
         return this._height;
     }
 
-    getCellContent(x, y) {
-        return this.canvas[y - 1][x - 1];
+    getCellContent(coordX, coordY) {
+        return this.canvas[coordY - 1][coordX - 1];
     }
 
-    setCellContent(x, y, fillValue) {
-        this.canvas[y - 1][x - 1] = fillValue
+    setCellContent(coordX, coordY, fillValue) {
+        this.canvas[coordY - 1][coordX - 1] = fillValue
     }
 }
 

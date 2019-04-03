@@ -4,7 +4,7 @@ describe('The canvas', () => {
     let canvas = null;
 
     beforeAll(() => {
-        canvas = new Canvas(10, 5);
+        canvas = Canvas.create(10, 5);
     });
 
     test('should create a canvas object', () => {

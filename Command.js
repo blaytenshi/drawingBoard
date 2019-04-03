@@ -23,7 +23,7 @@ class Command {
             this._operation = operation[0];
             this._coordinateX1 = parseInt(operation[1]);
             this._coordinateY1 = parseInt(operation[2]);
-            this._fillValue = operation[3];
+            this._fillValue = operation[3].toLowerCase();
         } else if (operation[0] === "Q" && operation.length === 1) {
             this._operation = operation[0];
         } else {
