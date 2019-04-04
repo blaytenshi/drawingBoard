@@ -1,4 +1,5 @@
 const Canvas = require('./Canvas');
+const InvalidCanvasDimensionsError = require('./InvalidCanvasDimensionsError');
 
 describe('The canvas', () => {
     let canvas = null;
@@ -24,10 +25,17 @@ describe('The canvas', () => {
         expect(canvas.getCellContent(1, 1)).toBe(' ');
     });
 
-    test('should set conent of a cell with given coordinates', () => {
+    test('should set content of a cell with given coordinates', () => {
         canvas.setCellContent(1, 1, 'x');
         expect(canvas.getCellContent(1, 1)).toBe('x');
     });
 
 });
 
+describe('A canvas', () => {
+    it('should throw InvalidCanvasDimensionsError when a canvas canvas is created with dimensions less than 1', () => {
+        expect(() => {
+            Canvas.create(0, 0)
+        }).toThrow(InvalidCanvasDimensionsError);
+    })
+})

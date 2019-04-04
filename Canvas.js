@@ -1,3 +1,5 @@
+const InvalidCanvasDimensionsError = require('./InvalidCanvasDimensionsError');
+
 class Canvas {
     constructor(width, height) {
         this._width = width;
@@ -11,6 +13,9 @@ class Canvas {
     }
 
     static create(width, height) {
+        if (width < 1 || height < 1) {
+            throw new InvalidCanvasDimensionsError('Canvas dimensions cannot be less than 1.', width, height);
+        }
         return new Canvas(width, height);
     }
 

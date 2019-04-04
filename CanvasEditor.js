@@ -4,6 +4,10 @@ const CoordinateOutOfBoundsError = require('./CoordinatesSetOutOfBoundsError');
 class CanvasEditor {
 
     drawLine(canvas, coordX1, coordY1, coordX2, coordY2) {
+        if (canvas === null || canvas === undefined) {
+            throw new Error('Canvas has not been created yet!');
+        }
+
         if (this.isCoordinatesOutOfBounds(canvas, coordX1, coordY1) || this.isCoordinatesOutOfBounds(canvas, coordX2, coordY2)) {
             throw new CoordinateOutOfBoundsError(coordX1, coordY1, coordX2, coordY2);
         }

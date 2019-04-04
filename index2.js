@@ -49,7 +49,7 @@ rl.on('line', line => {
                 );
                 OperationType.render(canvas);
                 break;
-            case OperationTypes.BUCKET_FILL:
+            case OperationType.BUCKET_FILL:
                 console.log("Drawing Bucket Fill");
                 canvasEditor.bucketFill(
                     canvas,
@@ -61,7 +61,6 @@ rl.on('line', line => {
                 break;
             case OperationType.QUIT:
                 rl.close();
-                break;
         }
     // } catch (e) {
     //     output.write(e.message);

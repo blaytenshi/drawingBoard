@@ -10,7 +10,7 @@ describe('The Renderer', () => {
         renderer = new Renderer(process.stdout);
     });
 
-    test('should blah', () => {
+    test('should render the given canvas', () => {
         expect(renderer.render(canvas)).toHaveBeenCalled();
     })
 });
