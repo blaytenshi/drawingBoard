@@ -1,15 +1,20 @@
 const InvalidLineError = require('./InvalidLineError');
-const CoordinateOutOfBoundsError = require('./CoordinatesSetOutOfBoundsError');
+const CoordinateOutOfBoundsError = require('./CoordinatesOutOfBoundsError');
+const InvalidCanvasDimensionsError = require('./InvalidCanvasDimensionsError');
 
 class CanvasEditor {
 
     drawLine(canvas, coordX1, coordY1, coordX2, coordY2) {
-        if (canvas === null || canvas === undefined) {
-            throw new Error('Canvas has not been created yet!');
+        if (canvas === null) {
+            throw new InvalidCanvasDimensionsError('Canvas has not been created yet!');
         }
 
-        if (this.isCoordinatesOutOfBounds(canvas, coordX1, coordY1) || this.isCoordinatesOutOfBounds(canvas, coordX2, coordY2)) {
-            throw new CoordinateOutOfBoundsError(coordX1, coordY1, coordX2, coordY2);
+        if (this.isCoordinatesOutOfBounds(canvas, coordX1, coordY1)) {
+            throw new CoordinateOutOfBoundsError('Coordinates are not within Canvas bounds.', canvas, coordX1, coordY1);
+        }
+
+        if (this.isCoordinatesOutOfBounds(canvas, coordX2, coordY2)) {
+            throw new CoordinateOutOfBoundsError('Coordinates are not within Canvas bounds.', canvas, coordX2, coordY2);
         }
 
         if (coordY1 === coordY2) {
@@ -32,6 +37,18 @@ class CanvasEditor {
     }
 
     drawRectangle(canvas, coordX1, coordY1, coordX2, coordY2) {
+        if (canvas === null) {
+            throw new InvalidCanvasDimensionsError('Canvas has not been created yet!')
+        }
+
+        if (this.isCoordinatesOutOfBounds(canvas, coordX1, coordY1)) {
+            throw new CoordinateOutOfBoundsError('Coordinates are not within Canvas bounds.', canvas, coordX1, coordY1);
+        }
+
+        if (this.isCoordinatesOutOfBounds(canvas, coordX2, coordY2)) {
+            throw new CoordinateOutOfBoundsError('Coordinates are not within Canvas bounds.', canvas, coordX2, coordY2);
+        }
+
         // draws lines in counter clockwise
         this.drawLine(canvas,
             coordX1, coordY1,
@@ -52,6 +69,13 @@ class CanvasEditor {
     }
 
     bucketFill(canvas, startX, startY, userFillValue) {
+        if (canvas === null) {
+            throw new InvalidCanvasDimensionsError('Canvas has not been created yet!')
+        }
+
+        if (this.isCoordinatesOutOfBounds(canvas, startX, startY)) {
+            throw new CoordinateOutOfBoundsError('Coordinates are not within Canvas bounds.', canvas, startX, startY)
+        }
         // gets initial filled value from start coordinates for later comparison
         const initialFillValue = canvas.getCellContent(startX, startY);
 

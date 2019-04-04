@@ -38,4 +38,4 @@ describe('A canvas', () => {
             Canvas.create(0, 0)
         }).toThrow(InvalidCanvasDimensionsError);
     })
-})
+});

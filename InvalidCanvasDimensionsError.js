@@ -1,6 +1,6 @@
 class InvalidCanvasDimensionsError extends Error {
-    constructor(message, width, height) {
-        super(`${message}: { width: ${width}, height: ${height} }`);
+    constructor(message) {
+        super(`${message}`);
         this.name = 'InvalidCanvasDimensionsError';
     }
 }

@@ -22,7 +22,7 @@ const renderer = new Renderer(output);
 rl.prompt();
 
 rl.on('line', line => {
-    // try {
+    try {
         const command = new Command(line);
 
         switch (command.getOperation()) {
@@ -62,9 +62,9 @@ rl.on('line', line => {
             case OperationType.QUIT:
                 rl.close();
         }
-    // } catch (e) {
-    //     output.write(e.message);
-    // }
+    } catch (e) {
+        output.write(e.message);
+    }
     rl.prompt();
 }).on('close', () => {
     process.exit();
