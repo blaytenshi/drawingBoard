@@ -24,53 +24,31 @@ describe('The CanvasEditor', () => {
         coordinate4 = new Coordinate(100, 100);
     });
 
-    test('should return true when X values of two coordinates are the same', () => {
-        expect(canvasEditor.isVertical(coordinate1, coordinate2)).toBe(true);
-    });
-
-    test('should return false when X values of two coordinates are not the same', () => {
-        expect(canvasEditor.isVertical(coordinate1, coordinate3)).toBe(false);
-    });
-
-    test('should return true when Y values of two coordinates are the same', () => {
-        expect(canvasEditor.isHorizontal(coordinate2, coordinate3)).toBe(true);
-    });
-
-    test('should return false when Y values of two coordinates are not the same', () => {
-        expect(canvasEditor.isHorizontal(coordinate1, coordinate3)).toBe(false);
-    });
-
     test('should throw error when given coordinate set that is out of canvas bounds', () => {
         expect(() => {
-            canvasEditor.drawLine(coordinate1, coordinate4);
+            canvasEditor.drawLine(canvas, 5, 5, 100, 100);
         }).toThrow(CoordinatesSetOutOfBoundsError);
     });
 
     test('should draw horizontal lines onto the canvas', () => {
-        canvasEditor.drawLine(coordinate2, coordinate3);
+        canvasEditor.drawLine(canvas,5, 10, 10, 10);
         // Test start of line is filled
-        expect(canvas.getCellContent(coordinate2.getX(), coordinate3.getY())).toBe('x');
+        expect(canvas.getCellContent(5, 10)).toBe('x');
         // Test end of line is filled, the -1 is needed for off-by-one
-        expect(canvas.getCellContent(
-            coordinate2.getX() + Math.abs(coordinate2.getX() - coordinate3.getX()) - 1,
-            coordinate3.getY())
-        ).toBe('x');
+        expect(canvas.getCellContent(10,10)).toBe('x');
     });
 
     test('should draw vertical lines onto the canvas', () => {
-        canvasEditor.drawLine(coordinate1, coordinate2);
-        expect(canvas.getCellContent(coordinate1.getY(), coordinate2.getY())).toBe('x');
-        expect(canvas.getCellContent(
-            coordinate1.getX(),
-            coordinate1.getY() + Math.abs(coordinate1.getY() - coordinate2.getY()) - 1)
-        ).toBe('x');
+        canvasEditor.drawLine(canvas, 5, 5, 5, 10);
+        expect(canvas.getCellContent(5, 5)).toBe('x');
+        expect(canvas.getCellContent(5, 10)).toBe('x');
     });
 
     test('should throw error when given coordinates doesn\'t cannot create horizontal or vertical line', () => {
         // since we're testing that the drawLine function actually throws errors with inputs, we must wrap it
         // inside an anonymous functiono when calling the functioon to test
         expect(() => {
-            canvasEditor.drawLine(coordinate1, coordinate3)
+            canvasEditor.drawLine(canvas, 5, 5, 10, 10)
         }).toThrow(InvalidLineError);
     });
 

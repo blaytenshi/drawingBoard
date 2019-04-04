@@ -1,6 +1,6 @@
 const readline = require('readline');
 const Command = require('./Command');
-const Operation = require('./Operation');
+const OperationType = require('./OperationType');
 const Canvas = require('./Canvas');
 const CanvasEditor = require('./CanvasEditor');
 const Renderer = require('./Renderer');
@@ -26,12 +26,12 @@ rl.on('line', line => {
         const command = new Command(line);
 
         switch (command.getOperation()) {
-            case Operation.CREATE_CANVAS:
+            case OperationType.CREATE_CANVAS:
                 console.log("Creating Canvas");
                 canvas = Canvas.create(command.getX1(), command.getY1());
                 renderer.render(canvas);
                 break;
-            case Operation.DRAW_LINE:
+            case OperationType.DRAW_LINE:
                 console.log("Drawing Line");
                 canvasEditor.drawLine(
                     canvas,
@@ -40,16 +40,16 @@ rl.on('line', line => {
                 );
                 renderer.render(canvas);
                 break;
-            case Operation.DRAW_RECT:
+            case OperationType.DRAW_RECT:
                 console.log("Drawing Rectangle");
                 canvasEditor.drawRectangle(
                     canvas,
                     command.getX1(), command.getY1(),
                     command.getX2(), command.getY2(),
                 );
-                renderer.render(canvas);
+                OperationType.render(canvas);
                 break;
-            case Operation.BUCKET_FILL:
+            case OperationTypes.BUCKET_FILL:
                 console.log("Drawing Bucket Fill");
                 canvasEditor.bucketFill(
                     canvas,
@@ -59,7 +59,7 @@ rl.on('line', line => {
                 );
                 renderer.render(canvas);
                 break;
-            case Operation.QUIT:
+            case OperationType.QUIT:
                 rl.close();
                 break;
         }

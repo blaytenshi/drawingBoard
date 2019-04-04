@@ -1,4 +1,4 @@
-const Operation = {
+const OperationType = {
     CREATE_CANVAS: 'C',
     DRAW_LINE: 'L',
     DRAW_RECT: 'R',
@@ -6,4 +6,4 @@ const Operation = {
     QUIT: 'Q'
 };
 
-module.exports = Operation;
+module.exports = OperationType;

@@ -1,33 +1,52 @@
-const InvalidOperationError = require('./InvalidOperationError');
+const OperationType = require('./OperationType');
+const InvalidCommandError = require('./InvalidCommandError');
+const { isNumeric } = require('./Utils');
 
 class Command {
     constructor(opString) {
-        const operation = opString.toUpperCase().split(" ");
-        if (operation[0] === "C" && operation.length === 3) {
-            this._operation = operation[0];
-            this._coordinateX1 = parseInt(operation[1]);
-            this._coordinateY1 = parseInt(operation[2]);
-        } else if (operation[0] === "L" && operation.length === 5) {
-            this._operation = operation[0];
-            this._coordinateX1 = parseInt(operation[1]);
-            this._coordinateY1 = parseInt(operation[2]);
-            this._coordinateX2 = parseInt(operation[3]);
-            this._coordinateY2 = parseInt(operation[4]);
-        } else if (operation[0] === "R" && operation.length === 5) {
-            this._operation = operation[0];
-            this._coordinateX1 = parseInt(operation[1]);
-            this._coordinateY1 = parseInt(operation[2]);
-            this._coordinateX2 = parseInt(operation[3]);
-            this._coordinateY2 = parseInt(operation[4]);
-        } else if (operation[0] === "B" && operation.length === 4) {
-            this._operation = operation[0];
-            this._coordinateX1 = parseInt(operation[1]);
-            this._coordinateY1 = parseInt(operation[2]);
-            this._fillValue = operation[3].toLowerCase();
-        } else if (operation[0] === "Q" && operation.length === 1) {
+        const operation = opString.trim().toUpperCase().split(" ");
+        if (operation[0] === OperationType.CREATE_CANVAS &&
+            isNumeric(operation[1]) &&
+            isNumeric(operation[2]) &&
+            operation.length === 3) {
+                this._operation = operation[0];
+                this._coordinateX1 = parseInt(operation[1]);
+                this._coordinateY1 = parseInt(operation[2]);
+        } else if (operation[0] === OperationType.DRAW_LINE &&
+            isNumeric(operation[1]) &&
+            isNumeric(operation[2]) &&
+            isNumeric(operation[3]) &&
+            isNumeric(operation[4]) &&
+            operation.length === 5) {
+                this._operation = operation[0];
+                this._coordinateX1 = parseInt(operation[1]);
+                this._coordinateY1 = parseInt(operation[2]);
+                this._coordinateX2 = parseInt(operation[3]);
+                this._coordinateY2 = parseInt(operation[4]);
+        } else if (operation[0] === OperationType.DRAW_RECT &&
+            isNumeric(operation[1]) &&
+            isNumeric(operation[2]) &&
+            isNumeric(operation[3]) &&
+            isNumeric(operation[4]) &&
+            operation.length === 5) {
+                this._operation = operation[0];
+                this._coordinateX1 = parseInt(operation[1]);
+                this._coordinateY1 = parseInt(operation[2]);
+                this._coordinateX2 = parseInt(operation[3]);
+                this._coordinateY2 = parseInt(operation[4]);
+        } else if (operation[0] === OperationType.BUCKET_FILL &&
+            isNumeric(operation[1]) &&
+            isNumeric(operation[2]) &&
+            operation[3] &&
+            operation.length === 4) {
+                this._operation = operation[0];
+                this._coordinateX1 = parseInt(operation[1]);
+                this._coordinateY1 = parseInt(operation[2]);
+                this._fillValue = operation[3].substring(0, 1).toLowerCase();
+        } else if (operation[0] === OperationType.QUIT && operation.length === 1) {
             this._operation = operation[0];
         } else {
-            throw new InvalidOperationError(`Operation is malformed. Please check your inputs! ${opString}`);
+            throw new InvalidCommandError('Input command is malformed. Please check your inputs!', opString);
         }
     }
 

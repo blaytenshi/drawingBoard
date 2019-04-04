@@ -1,14 +1,16 @@
 const InvalidInputError = require('./InvalidInputError');
 
 class CoordinatesSetOutOfBoundsError extends InvalidInputError {
-    constructor(coordinate1, coordinate2) {
+    constructor(coordX1, coordY1, coordX2, coordY2) {
         super("Supplied Coordinates set are not within canvas boundaries." +
-            "Coordinate1: { X: " + coordinate1.getX() + ", Y: " + coordinate1.getY() + " }, " +
-            "Coordinate2: { X: " + coordinate2.getY() + ", Y: " + coordinate2.getY() + " }"
+            "Coordinate1: { X: " + coordX1 + ", Y: " + coordY1 + " }, " +
+            "Coordinate2: { X: " + coordX2 + ", Y: " + coordY2 + " }"
         );
         this.name = "CoordinatesSetOutOfBoundsError";
-        this.coordinate1 = coordinate1;
-        this.coordinate2 = coordinate2;
+        this.coordX1 = coordX1;
+        this.coordY1 = coordY1;
+        this.coordX2 = coordX2;
+        this.coordY2 = coordY2;
     }
 }
 module.exports = CoordinatesSetOutOfBoundsError;

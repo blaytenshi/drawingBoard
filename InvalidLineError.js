@@ -1,10 +1,10 @@
 const InvalidInputError = require('./InvalidInputError');
 
 class InvalidLineError extends InvalidInputError {
-    constructor(coordinate1, coordinate2) {
+    constructor(coordX1, coordY1, coordX2, coordY2) {
         super("Given coordinates do not produce a horizontal or vertical line! " +
-            "Coordinate1: { X: " + coordinate1.getX() + ", Y: " + coordinate1.getY() + " }, " +
-            "Coordinate2: { X: " + coordinate2.getY() + ", Y: " + coordinate2.getY() + " }"
+            "Coordinate1: { X: " + coordX1 + ", Y: " + coordY1 + " }, " +
+            "Coordinate2: { X: " + coordX2 + ", Y: " + coordY2 + " }"
         );
         this.name = "InvalidLineError"
     }
