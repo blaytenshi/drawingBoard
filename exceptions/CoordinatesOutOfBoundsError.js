@@ -1,4 +1,3 @@
-
 class CoordinatesOutOfBoundsError extends Error {
     constructor(message, canvasWidth, canvasHeight, coordX, coordY) {
         super(

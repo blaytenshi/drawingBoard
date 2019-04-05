@@ -46,7 +46,7 @@ rl.on('line', line => {
                     command.getX1(), command.getY1(),
                     command.getX2(), command.getY2(),
                 );
-                OperationType.render(canvas);
+                renderer.render(canvas);
                 break;
             case OperationType.BUCKET_FILL:
                 console.log("Drawing Bucket Fill");
