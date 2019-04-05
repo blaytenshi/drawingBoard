@@ -35,11 +35,11 @@ function handleLine(line, canvas, renderer, canvasEditor) {
 
     switch (command.getOperation()) {
         case OperationType.CREATE_CANVAS:
-            console.log("Creating Canvas");
+            // console.log("Creating Canvas");
             canvas = Canvas.create(command.getX1(), command.getY1());
             break;
         case OperationType.DRAW_LINE:
-            console.log("Drawing Line");
+            // console.log("Drawing Line");
             canvasEditor.drawLine(
                 canvas,
                 command.getX1(), command.getY1(),
@@ -47,7 +47,7 @@ function handleLine(line, canvas, renderer, canvasEditor) {
             );
             break;
         case OperationType.DRAW_RECT:
-            console.log("Drawing Rectangle");
+            // console.log("Drawing Rectangle");
             canvasEditor.drawRectangle(
                 canvas,
                 command.getX1(), command.getY1(),
@@ -55,7 +55,7 @@ function handleLine(line, canvas, renderer, canvasEditor) {
             );
             break;
         case OperationType.BUCKET_FILL:
-            console.log("Drawing Bucket Fill");
+            // console.log("Drawing Bucket Fill");
             canvasEditor.bucketFill(
                 canvas,
                 command.getX1(),
