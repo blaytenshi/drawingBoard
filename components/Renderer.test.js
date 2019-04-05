@@ -5,37 +5,22 @@ const Renderer = require('./Renderer');
 jest.mock('process');
 
 describe('The Renderer', () => {
-    let renderer = null;
-    let canvas = null;
-
-    // beforeAll(() => {
-    //     // syntactic sugar version
-    //     const spy = jest.spyOn(process.stdout, "write").mockImplementation((data) => {
-    //         console.log(data)
-    //     });
-    //
-    //     canvas = new Canvas(1, 1);
-    //     renderer = new Renderer(process.stdout);
-    // });
-
-    beforeAll(() => {
-        // sugar free version
-        const originalWrite = process.stdout.write;
-
-        process.stdout.write = jest.fn(originalWrite);
-
-        process.stdout.write.mockImplementation((data) => {
-            console.log(data);
+    test('should render given canvas', () => {
+        const canvas = Canvas.create(1, 1);
+        const renderer = new Renderer(process.stdout);
+        // replace usual write function with our own implementation using spyOn()
+        const processStdOutWriteSpy = jest.spyOn(process.stdout, "write").mockImplementation((data) => {
+            return data;
         });
 
-        canvas = new Canvas(1, 1);
-        renderer = new Renderer(process.stdout);
-    });
-
-    // test('blah', () => {
-    //     expect(true).toBe(true);
-    // });
-    test('should render the given canvas', () => {
         renderer.render(canvas);
-    })
+        expect(processStdOutWriteSpy).toHaveBeenNthCalledWith(1, '---');
+        expect(processStdOutWriteSpy).toHaveBeenNthCalledWith(2, '\n');
+        expect(processStdOutWriteSpy).toHaveBeenNthCalledWith(3, '|');
+        expect(processStdOutWriteSpy).toHaveBeenNthCalledWith(4, ' ');
+        expect(processStdOutWriteSpy).toHaveBeenNthCalledWith(5, '|\n');
+        expect(processStdOutWriteSpy).toHaveBeenNthCalledWith(6, '---');
+        expect(processStdOutWriteSpy).toHaveBeenNthCalledWith(7, '\n\n');
+        expect(processStdOutWriteSpy).toHaveBeenCalledTimes(7);
+    });
 });
