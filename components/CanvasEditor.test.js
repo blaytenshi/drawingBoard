@@ -1,10 +1,9 @@
 const CanvasEditor = require('./CanvasEditor');
 const Canvas = require('./Canvas');
-const Coordinate = require('./Coordinate');
-const Renderer = require('./Renderer');
 const InvalidLineError = require('../exceptions/InvalidLineError');
 const CoordinatesOutOfBoundsError = require('../exceptions/CoordinatesOutOfBoundsError');
 const InvalidCanvasDimensionsError = require('../exceptions/InvalidCanvasDimensionsError');
+const CanvasNotInitializedError = require('../exceptions/CanvasNotInitializedError');
 
 describe('The CanvasEditor', () => {
     let canvas;
@@ -15,22 +14,10 @@ describe('The CanvasEditor', () => {
         canvasEditor = new CanvasEditor(canvas);
     });
 
-    it('should throw CoordinatesOutOfBoundsError when first set of coordinates for draw line that is out of canvas bounds', () => {
-        expect(() => {
-            canvasEditor.drawLine(canvas, 50, 50, 10, 10);
-        }).toThrow(CoordinatesOutOfBoundsError);
-    });
-
-    it('should throw CoordinatesOutOfBoundsError when second set of coordinates for draw line that is out of canvas bounds', () => {
-        expect(() => {
-            canvasEditor.drawLine(canvas, 5, 5, 100, 100);
-        }).toThrow(CoordinatesOutOfBoundsError);
-    });
-
     it('should throw InvalidCanvasDimensionsError when attempting to draw line on non-existant canvas', () => {
         expect(() => {
-            canvasEditor.drawLine(null, 5, 10, 10, 10);
-        }).toThrow(InvalidCanvasDimensionsError);
+            canvasEditor.drawLine(undefined, 5, 10, 10, 10);
+        }).toThrow(CanvasNotInitializedError);
     });
 
     it('should throw InvalidLineError when given coordinates doesn\'t cannot create horizontal or vertical line', () => {
@@ -41,10 +28,22 @@ describe('The CanvasEditor', () => {
         }).toThrow(InvalidLineError);
     });
 
+    it('should throw CoordinateOutOfBounds error when coordinates create horizontal lines but are out of bounds', () => {
+        expect(() => {
+            canvasEditor.drawLine(canvas, -1, 5, 20, 5);
+        }).toThrow(CoordinatesOutOfBoundsError);
+    });
+
+    it('should throw CoordinateOutOfBounds error when coordinates create vertical lines but are out of bounds', () => {
+        expect(() => {
+            canvasEditor.drawLine(canvas, 5, -1, 5, 20);
+        }).toThrow(CoordinatesOutOfBoundsError);
+    });
+
     it('should throw InvalidCanvasDimensionsError when attempting to draw rectangle on non-existant canvas', () => {
         expect(() => {
-            canvasEditor.drawRectangle(null, 5, 5, 10, 10);
-        }).toThrow(InvalidCanvasDimensionsError);
+            canvasEditor.drawRectangle(undefined, 5, 5, 10, 10);
+        }).toThrow(CanvasNotInitializedError);
     });
 
     it('should throw CoordinateOutOfBoundsError when first set of coordinates for draw rectangle is out of canvas bounds', () => {
@@ -61,14 +60,14 @@ describe('The CanvasEditor', () => {
 
     it('should throw CoordinateOutOfBoundsError when coordinates for bucket fill is out of canvas bounds', () => {
         expect(() => {
-            canvasEditor.bucketFill(canvas, 15, 15);
+            canvasEditor.bucketFill(canvas, 15, 15, 'o');
         }).toThrow(CoordinatesOutOfBoundsError);
     });
 
     it('should throw InvalidCanvasDimensionsError when attempting to bucket fill on non-existant canvas', () => {
         expect(() => {
-            canvasEditor.bucketFill(null, 10, 3, 'o')
-        }).toThrow(InvalidCanvasDimensionsError);
+            canvasEditor.bucketFill(undefined, 10, 3, 'o')
+        }).toThrow(CanvasNotInitializedError);
     });
 });
 

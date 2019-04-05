@@ -1,4 +1,5 @@
 const InvalidCanvasDimensionsError = require('../exceptions/InvalidCanvasDimensionsError');
+const CoordinateOutOfBoundsError = require('../exceptions/CoordinatesOutOfBoundsError');
 
 class Canvas {
     constructor(width, height) {
@@ -28,11 +29,21 @@ class Canvas {
     }
 
     getCellContent(coordX, coordY) {
+        if (this.isCoordinatesOutOfBounds(coordX, coordY)) {
+            throw new CoordinateOutOfBoundsError('Coordinates are not within Canvas bounds.', this.getWidth(), this.getHeight(), coordX, coordY);
+        }
         return this.canvas[coordY - 1][coordX - 1];
     }
 
     setCellContent(coordX, coordY, fillValue) {
+        if (this.isCoordinatesOutOfBounds(coordX, coordY)) {
+            throw new CoordinateOutOfBoundsError('Coordinates are not within Canvas bounds.', this.getWidth(), this.getHeight(), coordX, coordY);
+        }
         this.canvas[coordY - 1][coordX - 1] = fillValue
+    }
+
+    isCoordinatesOutOfBounds(coordX, coordY) {
+        return coordX < 1 || coordX > this.getWidth() || coordY < 1 || coordY > this.getHeight();
     }
 }
 

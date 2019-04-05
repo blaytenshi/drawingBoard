@@ -1,22 +1,14 @@
 const InvalidLineError = require('../exceptions/InvalidLineError');
 const CoordinateOutOfBoundsError = require('../exceptions/CoordinatesOutOfBoundsError');
 const InvalidCanvasDimensionsError = require('../exceptions/InvalidCanvasDimensionsError');
+const CanvasNotInitializedError = require('../exceptions/CanvasNotInitializedError');
 
 class CanvasEditor {
 
     drawLine(canvas, coordX1, coordY1, coordX2, coordY2) {
-        if (canvas === null) {
-            throw new InvalidCanvasDimensionsError('Canvas has not been created yet!');
+        if (canvas === undefined) {
+            throw new CanvasNotInitializedError('Canvas has not been initialized! Please first create a canvas!');
         }
-
-        if (this.isCoordinatesOutOfBounds(canvas, coordX1, coordY1)) {
-            throw new CoordinateOutOfBoundsError('Coordinates are not within Canvas bounds.', canvas, coordX1, coordY1);
-        }
-
-        if (this.isCoordinatesOutOfBounds(canvas, coordX2, coordY2)) {
-            throw new CoordinateOutOfBoundsError('Coordinates are not within Canvas bounds.', canvas, coordX2, coordY2);
-        }
-
         if (coordY1 === coordY2) {
             // Y1, Y2 is the same therefore repeat inserts for X
             const startPoint = Math.min(coordX1, coordX2);
@@ -37,18 +29,9 @@ class CanvasEditor {
     }
 
     drawRectangle(canvas, coordX1, coordY1, coordX2, coordY2) {
-        if (canvas === null) {
-            throw new InvalidCanvasDimensionsError('Canvas has not been created yet!')
+        if (canvas === undefined) {
+            throw new CanvasNotInitializedError('Canvas has not been initialized! Please first create a canvas!');
         }
-
-        if (this.isCoordinatesOutOfBounds(canvas, coordX1, coordY1)) {
-            throw new CoordinateOutOfBoundsError('Coordinates are not within Canvas bounds.', canvas, coordX1, coordY1);
-        }
-
-        if (this.isCoordinatesOutOfBounds(canvas, coordX2, coordY2)) {
-            throw new CoordinateOutOfBoundsError('Coordinates are not within Canvas bounds.', canvas, coordX2, coordY2);
-        }
-
         // draws lines in counter clockwise
         this.drawLine(canvas,
             coordX1, coordY1,
@@ -69,12 +52,8 @@ class CanvasEditor {
     }
 
     bucketFill(canvas, startX, startY, userFillValue) {
-        if (canvas === null) {
-            throw new InvalidCanvasDimensionsError('Canvas has not been created yet!')
-        }
-
-        if (this.isCoordinatesOutOfBounds(canvas, startX, startY)) {
-            throw new CoordinateOutOfBoundsError('Coordinates are not within Canvas bounds.', canvas, startX, startY)
+        if (canvas === undefined) {
+            throw new CanvasNotInitializedError('Canvas has not been initialized! Please first create a canvas!');
         }
         // gets initial filled value from start coordinates for later comparison
         const initialFillValue = canvas.getCellContent(startX, startY);
@@ -84,7 +63,7 @@ class CanvasEditor {
 
     // recursive function to recursively fill in the canvas
     recursiveFill(canvas, startX, startY, initialFillValue, userFillValue) {
-        if (this.isCoordinatesOutOfBounds(canvas, startX, startY)) {
+        if (startX < 1 || startX > canvas.getWidth() || startY < 1 || startY > canvas.getHeight()) {
             return;
         }
         if (canvas.getCellContent(startX, startY) === initialFillValue) {
@@ -100,10 +79,6 @@ class CanvasEditor {
             // left
             this.recursiveFill(canvas, startX - 1, startY, initialFillValue, userFillValue);
         }
-    }
-
-    isCoordinatesOutOfBounds(canvas, coordX, coordY) {
-        return coordX < 1 || coordX > canvas.getWidth() || coordY < 1 || coordY > canvas.getHeight();
     }
 
 }

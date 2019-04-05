@@ -4,7 +4,6 @@ const OperationType = require('./components/OperationType');
 const Canvas = require('./components/Canvas');
 const CanvasEditor = require('./components/CanvasEditor');
 const Renderer = require('./components/Renderer');
-const Coordinate = require('./components/Coordinate');
 
 const input = process.stdin;
 const output = process.stdout;
@@ -15,7 +14,7 @@ const rl = readline.createInterface({
     prompt: 'enter command: '
 });
 
-let canvas = null;
+let canvas;
 let canvasEditor = new CanvasEditor();
 const renderer = new Renderer(output);
 

@@ -1,10 +1,10 @@
 
 class CoordinatesOutOfBoundsError extends Error {
-    constructor(message, canvas, coordX, coordY) {
+    constructor(message, canvasWidth, canvasHeight, coordX, coordY) {
         super(
             `${message}\n
-            Coordinate1: { X: ${coordX}, Y: ${coordY} }\n
-            Canvas Boundaries: { W: ${canvas.getWidth()}, H: ${canvas.getHeight()} }`
+            Coordinate: { X: ${coordX}, Y: ${coordY} }\n
+            Canvas Boundaries: { W: ${canvasWidth}, H: ${canvasHeight} }`
         );
         this.name = "CoordinatesOutOfBoundsError";
     }
