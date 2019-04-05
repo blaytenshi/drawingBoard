@@ -1,5 +1,5 @@
 const OperationType = require('./OperationType');
-const InvalidCommandError = require('./InvalidCommandError');
+const InvalidCommandError = require('../exceptions/InvalidCommandError');
 const { isNumeric } = require('./Utils');
 
 class Command {

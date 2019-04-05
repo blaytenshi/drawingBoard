@@ -1,5 +1,5 @@
 const Coordinate = require('./Coordinate');
-const InvalidCoordinateError = require('./InvalidCoordinateError');
+const InvalidCoordinateError = require('../exceptions/InvalidCoordinateError');
 
 describe('A valid coordinate', () => {
     let coordinate = null;

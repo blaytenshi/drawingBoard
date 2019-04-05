@@ -1,5 +1,5 @@
 const Canvas = require('./Canvas');
-const InvalidCanvasDimensionsError = require('./InvalidCanvasDimensionsError');
+const InvalidCanvasDimensionsError = require('../exceptions/InvalidCanvasDimensionsError');
 
 describe('The canvas', () => {
     let canvas = null;

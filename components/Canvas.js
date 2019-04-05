@@ -1,4 +1,4 @@
-const InvalidCanvasDimensionsError = require('./InvalidCanvasDimensionsError');
+const InvalidCanvasDimensionsError = require('../exceptions/InvalidCanvasDimensionsError');
 
 class Canvas {
     constructor(width, height) {

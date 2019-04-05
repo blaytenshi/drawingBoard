@@ -1,5 +1,5 @@
 const Command = require('./Command');
-const InvalidCommandError = require('./InvalidCommandError');
+const InvalidCommandError = require('../exceptions/InvalidCommandError');
 
 describe('A valid command string', () => {
     it('should return a valid canvas command', () => {

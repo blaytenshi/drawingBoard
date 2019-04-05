@@ -1,6 +1,6 @@
-const InvalidLineError = require('./InvalidLineError');
-const CoordinateOutOfBoundsError = require('./CoordinatesOutOfBoundsError');
-const InvalidCanvasDimensionsError = require('./InvalidCanvasDimensionsError');
+const InvalidLineError = require('../exceptions/InvalidLineError');
+const CoordinateOutOfBoundsError = require('../exceptions/CoordinatesOutOfBoundsError');
+const InvalidCanvasDimensionsError = require('../exceptions/InvalidCanvasDimensionsError');
 
 class CanvasEditor {
 

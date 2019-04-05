@@ -2,9 +2,9 @@ const CanvasEditor = require('./CanvasEditor');
 const Canvas = require('./Canvas');
 const Coordinate = require('./Coordinate');
 const Renderer = require('./Renderer');
-const InvalidLineError = require('./InvalidLineError');
-const CoordinatesOutOfBoundsError = require('./CoordinatesOutOfBoundsError');
-const InvalidCanvasDimensionsError = require('./InvalidCanvasDimensionsError');
+const InvalidLineError = require('../exceptions/InvalidLineError');
+const CoordinatesOutOfBoundsError = require('../exceptions/CoordinatesOutOfBoundsError');
+const InvalidCanvasDimensionsError = require('../exceptions/InvalidCanvasDimensionsError');
 
 describe('The CanvasEditor', () => {
     let canvas;
@@ -171,7 +171,7 @@ describe('The CanvasEditor', () => {
     let canvasEditor;
 
     beforeEach(() => {
-        canvas = Canvas.create(20, 4);
+        canvas = Canvas.create(5, 5);
         canvasEditor = new CanvasEditor(canvas);
     });
 
@@ -183,18 +183,94 @@ describe('The CanvasEditor', () => {
     it('should fill canvas with no empty areas', () => {
         const setCellContent = jest.spyOn(canvas, "setCellContent");
 
-        canvasEditor.bucketFill(canvas, 10, 3, 'o');
-        // expect it to be called 80 times because there's 20 x 4 = 80 cells to be filled.
-        expect(setCellContent).toHaveBeenCalledTimes(80);
+        canvasEditor.bucketFill(canvas, 3, 3, 'o');
+        // expect it to be called 80 times because there's 5 x 5 = 25 cells to be filled.
+        expect(setCellContent).toHaveBeenCalledTimes(25);
+        // for loop to check each of the 25 cell is filled with 'o'
+        for (let y = 1; y <= canvas.getHeight(); y++) {
+            for (let x = 1; x <= canvas.getWidth(); x++) {
+                expect(canvas.getCellContent(x, y)).toBe('o');
+            }
+        }
     });
 
-    // wont fill diagonals
+    it('should not fill diagonally adjacent cells', () => {
+        // manually create a diagonal line
+        canvas.setCellContent(1, 1, 'x');
+        canvas.setCellContent(2, 2, 'x');
+        canvas.setCellContent(3, 3, 'x');
+        canvas.setCellContent(4, 4, 'x');
+        canvas.setCellContent(5, 5, 'x');
+
+        canvasEditor.bucketFill(canvas,3, 3, 'p');
+
+        expect(canvas.getCellContent(1, 1)).toBe('x');
+        expect(canvas.getCellContent(2, 2)).toBe('x');
+        expect(canvas.getCellContent(3, 3)).toBe('p');
+        expect(canvas.getCellContent(4, 4)).toBe('x');
+        expect(canvas.getCellContent(5, 5)).toBe('x');
+    });
 
     // replace existing with new user specified
+    it('should replace existing filled areas with user specified fill value', () => {
+        // bisect the canvas in half horizontally
+        canvasEditor.drawLine(canvas, 1, 3, 5, 3, 'x');
 
-    // will wrap around lines
+        // set up spy so we can verify cell content is being set
+        const setCellContentSpy = jest.spyOn(canvas, "setCellContent");
 
-    // will stop at borders
+        // bucket fill top half and check
+        canvasEditor.bucketFill(canvas, 3, 2, 'o');
+        expect(setCellContentSpy).toHaveBeenCalledTimes(10);
+        for (let y = 1; y <= 2; y++) {
+            for (let x = 1; x < canvas.getWidth(); x++) {
+                expect(canvas.getCellContent(x, y)).toBe('o');
+            }
+        }
+        setCellContentSpy.mockClear();
+
+        // bucket fill top half again and check
+        canvasEditor.bucketFill(canvas, 3, 2, 'f');
+        expect(setCellContentSpy).toHaveBeenCalledTimes(10);
+        for (let y = 1; y <= 2; y++) {
+            for (let x = 1; x < canvas.getWidth(); x++) {
+                expect(canvas.getCellContent(x, y)).toBe('f');
+            }
+        }
+        setCellContentSpy.mockClear();
+
+        // bucket fill middle of original line and check previously filled area plus filled line
+        canvasEditor.bucketFill(canvas, 3, 3, 'f');
+        expect(setCellContentSpy).toHaveBeenCalledTimes(5);
+        for (let y = 1; y <= 3; y++) {
+            for (let x = 1; x < canvas.getWidth(); x++) {
+                expect(canvas.getCellContent(x, y)).toBe('f');
+            }
+        }
+        setCellContentSpy.mockClear();
+    });
+
+    it('should fill around lines', () => {
+        // draw line with two gaps at the end
+        canvasEditor.drawLine(canvas, 2, 3, 4, 3);
+
+        const setCellContentSpy = jest.spyOn(canvas, "setCellContent");
+
+        canvasEditor.bucketFill(canvas, 1,1, '#');
+        expect(setCellContentSpy).toHaveBeenCalledTimes(22);
+        expect(canvas.getCellContent(1, 3)).toBe('#');
+        expect(canvas.getCellContent(5, 3)).toBe('#');
+        for (let y = 1; y <= 2; y++) {
+            for (let x = 1; x < canvas.getWidth(); x++) {
+                expect(canvas.getCellContent(x, y)).toBe('#');
+            }
+        }
+        for (let y = 4; y <= 5; y++) {
+            for (let x = 1; x < canvas.getWidth(); x++) {
+                expect(canvas.getCellContent(x, y)).toBe('#');
+            }
+        }
+    })
 
 
 });

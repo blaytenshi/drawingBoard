@@ -1,4 +1,4 @@
-const InvalidCoordinateError = require('./InvalidCoordinateError');
+const InvalidCoordinateError = require('../exceptions/InvalidCoordinateError');
 
 class Coordinate {
     constructor(x, y) {
