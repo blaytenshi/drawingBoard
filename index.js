@@ -19,53 +19,57 @@ let canvasEditor = new CanvasEditor();
 const renderer = new Renderer(output);
 
 rl.prompt();
-
 rl.on('line', line => {
     try {
-        const command = new Command(line);
-
-        switch (command.getOperation()) {
-            case OperationType.CREATE_CANVAS:
-                console.log("Creating Canvas");
-                canvas = Canvas.create(command.getX1(), command.getY1());
-                renderer.render(canvas);
-                break;
-            case OperationType.DRAW_LINE:
-                console.log("Drawing Line");
-                canvasEditor.drawLine(
-                    canvas,
-                    command.getX1(), command.getY1(),
-                    command.getX2(), command.getY2(),
-                );
-                renderer.render(canvas);
-                break;
-            case OperationType.DRAW_RECT:
-                console.log("Drawing Rectangle");
-                canvasEditor.drawRectangle(
-                    canvas,
-                    command.getX1(), command.getY1(),
-                    command.getX2(), command.getY2(),
-                );
-                renderer.render(canvas);
-                break;
-            case OperationType.BUCKET_FILL:
-                console.log("Drawing Bucket Fill");
-                canvasEditor.bucketFill(
-                    canvas,
-                    command.getX1(),
-                    command.getY1(),
-                    command.getFillValue()
-                );
-                renderer.render(canvas);
-                break;
-            case OperationType.QUIT:
-                rl.close();
-                break;
-        }
+        canvas = handleLine(line, canvas, renderer, canvasEditor);
+        rl.prompt();
     } catch (e) {
         output.write(e.message);
     }
-    rl.prompt();
 }).on('close', () => {
     process.exit();
 });
+
+function handleLine(line, canvas, renderer, canvasEditor) {
+    const command = new Command(line);
+
+    switch (command.getOperation()) {
+        case OperationType.CREATE_CANVAS:
+            console.log("Creating Canvas");
+            canvas = Canvas.create(command.getX1(), command.getY1());
+            break;
+        case OperationType.DRAW_LINE:
+            console.log("Drawing Line");
+            canvasEditor.drawLine(
+                canvas,
+                command.getX1(), command.getY1(),
+                command.getX2(), command.getY2(),
+            );
+            break;
+        case OperationType.DRAW_RECT:
+            console.log("Drawing Rectangle");
+            canvasEditor.drawRectangle(
+                canvas,
+                command.getX1(), command.getY1(),
+                command.getX2(), command.getY2(),
+            );
+            break;
+        case OperationType.BUCKET_FILL:
+            console.log("Drawing Bucket Fill");
+            canvasEditor.bucketFill(
+                canvas,
+                command.getX1(),
+                command.getY1(),
+                command.getFillValue()
+            );
+            break;
+        case OperationType.QUIT:
+            rl.close();
+            break;
+    }
+
+    renderer.render(canvas);
+    return canvas;
+}
+
+module.exports = handleLine;
