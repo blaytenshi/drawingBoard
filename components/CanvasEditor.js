@@ -9,6 +9,15 @@ class CanvasEditor {
         if (canvas === undefined) {
             throw new CanvasNotInitializedError('Canvas has not been initialized! Please first create a canvas!');
         }
+
+        if (canvas.isCoordinatesOutOfBounds(coordX1, coordY1)) {
+            throw new CoordinateOutOfBoundsError('Coordinates are not within Canvas bounds.', canvas.getWidth(), canvas.getHeight(), coordX1, coordY1);
+        }
+
+        if (canvas.isCoordinatesOutOfBounds(coordX2, coordY2)) {
+            throw new CoordinateOutOfBoundsError('Coordinates are not within Canvas bounds.', canvas.getWidth(), canvas.getHeight(), coordX2, coordY2);
+        }
+
         if (coordY1 === coordY2) {
             // Y1, Y2 is the same therefore repeat inserts for X
             const startPoint = Math.min(coordX1, coordX2);
@@ -32,6 +41,15 @@ class CanvasEditor {
         if (canvas === undefined) {
             throw new CanvasNotInitializedError('Canvas has not been initialized! Please first create a canvas!');
         }
+
+        if (canvas.isCoordinatesOutOfBounds(coordX1, coordY1)) {
+            throw new CoordinateOutOfBoundsError('Coordinates are not within Canvas bounds.', canvas.getWidth(), canvas.getHeight(), coordX1, coordY1);
+        }
+
+        if (canvas.isCoordinatesOutOfBounds(coordX2, coordY2)) {
+            throw new CoordinateOutOfBoundsError('Coordinates are not within Canvas bounds.', canvas.getWidth(), canvas.getHeight(), coordX2, coordY2);
+        }
+
         // draws lines in counter clockwise
         this.drawLine(canvas,
             coordX1, coordY1,
@@ -55,14 +73,18 @@ class CanvasEditor {
         if (canvas === undefined) {
             throw new CanvasNotInitializedError('Canvas has not been initialized! Please first create a canvas!');
         }
+
+        if (canvas.isCoordinatesOutOfBounds(startX, startY)) {
+            throw new CoordinateOutOfBoundsError('Coordinates are not within Canvas bounds.', canvas.getWidth(), canvas.getHeight(), startX, startY);
+        }
         // gets initial filled value from start coordinates for later comparison
         const initialFillValue = canvas.getCellContent(startX, startY);
 
-        this.recursiveFill(canvas, startX, startY, initialFillValue, userFillValue)
+        this._recursiveFill(canvas, startX, startY, initialFillValue, userFillValue)
     }
 
     // recursive function to recursively fill in the canvas
-    recursiveFill(canvas, startX, startY, initialFillValue, userFillValue) {
+    _recursiveFill(canvas, startX, startY, initialFillValue, userFillValue) {
         if (startX < 1 || startX > canvas.getWidth() || startY < 1 || startY > canvas.getHeight()) {
             return;
         }
@@ -71,13 +93,13 @@ class CanvasEditor {
             // will only recursively fill in the top, bottom, left and right values so as not to
             // accidentally fill in diagonal coordinates
             // top
-            this.recursiveFill(canvas, startX, startY - 1, initialFillValue, userFillValue);
+            this._recursiveFill(canvas, startX, startY - 1, initialFillValue, userFillValue);
             // right
-            this.recursiveFill(canvas, startX + 1, startY, initialFillValue, userFillValue);
+            this._recursiveFill(canvas, startX + 1, startY, initialFillValue, userFillValue);
             // bottom
-            this.recursiveFill(canvas, startX, startY + 1, initialFillValue, userFillValue);
+            this._recursiveFill(canvas, startX, startY + 1, initialFillValue, userFillValue);
             // left
-            this.recursiveFill(canvas, startX - 1, startY, initialFillValue, userFillValue);
+            this._recursiveFill(canvas, startX - 1, startY, initialFillValue, userFillValue);
         }
     }
 

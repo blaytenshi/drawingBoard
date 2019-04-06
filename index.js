@@ -22,10 +22,10 @@ rl.prompt();
 rl.on('line', line => {
     try {
         canvas = handleLine(line, canvas, renderer, canvasEditor);
-        rl.prompt();
     } catch (e) {
         output.write(e.message);
     }
+    rl.prompt();
 }).on('close', () => {
     process.exit();
 });

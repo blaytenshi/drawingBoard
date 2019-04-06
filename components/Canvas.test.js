@@ -1,5 +1,6 @@
 const Canvas = require('./Canvas');
 const InvalidCanvasDimensionsError = require('../exceptions/InvalidCanvasDimensionsError');
+const CoordinatesOutOfBoundsError = require('../exceptions/CoordinatesOutOfBoundsError');
 
 describe('The canvas', () => {
     let canvas = null;
@@ -29,6 +30,18 @@ describe('The canvas', () => {
         canvas.setCellContent(1, 1, 'x');
         expect(canvas.getCellContent(1, 1)).toBe('x');
     });
+
+    test('should throw CoordinatesOutOfBoundsError when attempting to read a value from an out of bounds location', () => {
+        expect(() => {
+            canvas.getCellContent(11, 5)
+        }).toThrow(CoordinatesOutOfBoundsError);
+    });
+
+    test('should throw CoordinatesOutOfBoundsError when attempting to write a value from an out of bounds location', () => {
+        expect(() => {
+            canvas.setCellContent(11, 5)
+        }).toThrow(CoordinatesOutOfBoundsError);
+    })
 
 });
 
