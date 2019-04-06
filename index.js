@@ -18,17 +18,17 @@ let canvas;
 let canvasEditor = new CanvasEditor();
 const renderer = new Renderer(output);
 
-rl.prompt();
-rl.on('line', line => {
-    try {
-        canvas = handleLine(line, canvas, renderer, canvasEditor);
-    } catch (e) {
-        output.write(e.message);
-    }
+function run(rl, exit) {
     rl.prompt();
-}).on('close', () => {
-    process.exit();
-});
+    rl.on('line', line => {
+        try {
+            canvas = handleLine(line, canvas, renderer, canvasEditor);
+        } catch (e) {
+            output.write(e.message);
+        }
+        rl.prompt();
+    }).on('close', exit)
+}
 
 function handleLine(line, canvas, renderer, canvasEditor) {
     const command = new Command(line);
@@ -72,4 +72,14 @@ function handleLine(line, canvas, renderer, canvasEditor) {
     return canvas;
 }
 
-module.exports = handleLine;
+function exit() {
+    process.exit(0);
+}
+
+run(rl, exit);
+
+module.exports = {
+    handleLine,
+    run,
+    exit
+};

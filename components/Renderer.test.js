@@ -22,5 +22,7 @@ describe('The Renderer', () => {
         expect(processStdOutWriteSpy).toHaveBeenNthCalledWith(6, '---');
         expect(processStdOutWriteSpy).toHaveBeenNthCalledWith(7, '\n\n');
         expect(processStdOutWriteSpy).toHaveBeenCalledTimes(7);
+
+        processStdOutWriteSpy.mockRestore();
     });
 });

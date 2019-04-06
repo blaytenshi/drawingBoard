@@ -1,11 +1,11 @@
-const handleLine = require('./index');
+const { handleLine } = require('./index');
 const Canvas = require('./components/Canvas');
 const CanvasEditor = require('./components/CanvasEditor');
 const Renderer = require('./components/Renderer');
 const CanvasNotInitializedError = require('./exceptions/CanvasNotInitializedError');
 const InvalidCanvasDimensionsError = require('./exceptions/InvalidCanvasDimensionsError');
 
-// jest.mock('process');
+jest.mock('process');
 
 let renderer;
 let canvasEditor;
@@ -19,6 +19,10 @@ beforeAll(() => {
     renderer = new Renderer(process.stdout);
     canvasEditor = new CanvasEditor();
 });
+
+// afterAll(() => {
+//
+// });
 
 describe('The handleLine function', () => {
 
