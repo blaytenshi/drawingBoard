@@ -18,68 +18,114 @@ let canvas;
 let canvasEditor = new CanvasEditor();
 const renderer = new Renderer(output);
 
-function run(rl, exit) {
+run(rl, canvasEditor, renderer, exit);
+
+function run(rl, canvasEditor, renderer, exit) {
     rl.prompt();
     rl.on('line', line => {
         try {
-            canvas = handleLine(line, canvas, renderer, canvasEditor);
+            const command = new Command(line);
+
+            switch (command.getOperation()) {
+                case OperationType.CREATE_CANVAS:
+                    // console.log("Creating Canvas");
+                    canvas = Canvas.create(command.getX1(), command.getY1());
+                    renderer.render(canvas);
+                    rl.prompt();
+                    break;
+                case OperationType.DRAW_LINE:
+                    // console.log("Drawing Line");
+                    canvasEditor.drawLine(
+                        canvas,
+                        command.getX1(), command.getY1(),
+                        command.getX2(), command.getY2(),
+                    );
+                    renderer.render(canvas);
+                    rl.prompt();
+                    break;
+                case OperationType.DRAW_RECT:
+                    // console.log("Drawing Rectangle");
+                    canvasEditor.drawRectangle(
+                        canvas,
+                        command.getX1(), command.getY1(),
+                        command.getX2(), command.getY2(),
+                    );
+                    renderer.render(canvas);
+                    rl.prompt();
+                    break;
+                case OperationType.BUCKET_FILL:
+                    // console.log("Drawing Bucket Fill");
+                    canvasEditor.bucketFill(
+                        canvas,
+                        command.getX1(),
+                        command.getY1(),
+                        command.getFillValue()
+                    );
+                    renderer.render(canvas);
+                    rl.prompt();
+                    break;
+                case OperationType.QUIT:
+                    rl.close();
+                    break;
+            }
         } catch (e) {
             output.write(e.message);
+            rl.prompt();
         }
-        rl.prompt();
     }).on('close', exit)
 }
 
-function handleLine(line, canvas, renderer, canvasEditor) {
-    const command = new Command(line);
-
-    switch (command.getOperation()) {
-        case OperationType.CREATE_CANVAS:
-            // console.log("Creating Canvas");
-            canvas = Canvas.create(command.getX1(), command.getY1());
-            break;
-        case OperationType.DRAW_LINE:
-            // console.log("Drawing Line");
-            canvasEditor.drawLine(
-                canvas,
-                command.getX1(), command.getY1(),
-                command.getX2(), command.getY2(),
-            );
-            break;
-        case OperationType.DRAW_RECT:
-            // console.log("Drawing Rectangle");
-            canvasEditor.drawRectangle(
-                canvas,
-                command.getX1(), command.getY1(),
-                command.getX2(), command.getY2(),
-            );
-            break;
-        case OperationType.BUCKET_FILL:
-            // console.log("Drawing Bucket Fill");
-            canvasEditor.bucketFill(
-                canvas,
-                command.getX1(),
-                command.getY1(),
-                command.getFillValue()
-            );
-            break;
-        case OperationType.QUIT:
-            rl.close();
-            break;
-    }
-
-    renderer.render(canvas);
-    return canvas;
-}
+// function handleLine(line, canvas, renderer, canvasEditor) {
+//     const command = new Command(line);
+//
+//     switch (command.getOperation()) {
+//         case OperationType.CREATE_CANVAS:
+//             // console.log("Creating Canvas");
+//             canvas = Canvas.create(command.getX1(), command.getY1());
+//             renderer.render(canvas);
+//             break;
+//         case OperationType.DRAW_LINE:
+//             // console.log("Drawing Line");
+//             canvasEditor.drawLine(
+//                 canvas,
+//                 command.getX1(), command.getY1(),
+//                 command.getX2(), command.getY2(),
+//             );
+//             renderer.render(canvas);
+//             break;
+//         case OperationType.DRAW_RECT:
+//             // console.log("Drawing Rectangle");
+//             canvasEditor.drawRectangle(
+//                 canvas,
+//                 command.getX1(), command.getY1(),
+//                 command.getX2(), command.getY2(),
+//             );
+//             renderer.render(canvas);
+//             break;
+//         case OperationType.BUCKET_FILL:
+//             // console.log("Drawing Bucket Fill");
+//             canvasEditor.bucketFill(
+//                 canvas,
+//                 command.getX1(),
+//                 command.getY1(),
+//                 command.getFillValue()
+//             );
+//             renderer.render(canvas);
+//             break;
+//         case OperationType.QUIT:
+//             rl.close();
+//             break;
+//     }
+//
+//     return canvas;
+// }
 
 function exit() {
-    process.exit(0);
+    process.exitCode = 0;
 }
 
-run(rl, exit);
-
 module.exports = {
-    handleLine,
+    // handleLine,
     run,
     exit
 };

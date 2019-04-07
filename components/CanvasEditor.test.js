@@ -21,22 +21,32 @@ describe('The CanvasEditor', () => {
     });
 
     it('should throw InvalidLineError when given coordinates doesn\'t cannot create horizontal or vertical line', () => {
-        // since we're testing that the drawLine function actually throws errors with inputs, we must wrap it
-        // inside an anonymous function when calling the function to test
         expect(() => {
             canvasEditor.drawLine(canvas, 1, 1, 3, 3)
         }).toThrow(InvalidLineError);
     });
 
-    it('should throw CoordinateOutOfBounds error when coordinates create horizontal lines but are out of bounds', () => {
+    it('should throw CoordinateOutOfBounds error when coordinates to create horizontal lines but first set are out of bounds', () => {
         expect(() => {
             canvasEditor.drawLine(canvas, -1, 5, 20, 5);
         }).toThrow(CoordinatesOutOfBoundsError);
     });
 
-    it('should throw CoordinateOutOfBounds error when coordinates create vertical lines but are out of bounds', () => {
+    it('should throw CoordinateOutOfBounds error when coordinates to create horizontal lines but second set are out of bounds', () => {
+        expect(() => {
+            canvasEditor.drawLine(canvas, 1, 5, 20, 5);
+        }).toThrow(CoordinatesOutOfBoundsError);
+    });
+
+    it('should throw CoordinateOutOfBounds error when coordinates create vertical lines but first set are out of bounds', () => {
         expect(() => {
             canvasEditor.drawLine(canvas, 5, -1, 5, 20);
+        }).toThrow(CoordinatesOutOfBoundsError);
+    });
+
+    it('should throw CoordinateOutOfBounds error when coordinates create vertical lines but second set are out of bounds', () => {
+        expect(() => {
+            canvasEditor.drawLine(canvas, 5, 1, 5, 20);
         }).toThrow(CoordinatesOutOfBoundsError);
     });
 
